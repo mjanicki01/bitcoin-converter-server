@@ -4,7 +4,13 @@ from model import db, connect_db, EURData, GBPData, USDData
 import requests
 from datetime import datetime
 from threading import Timer
+from os import environ, path
 import os
+from dotenv import load_dotenv
+
+
+basedir = path.abspath(path.dirname(__file__))
+load_dotenv(path.join(basedir, '.env'))
 
 uri = os.environ.get('DATABASE_URL')
 if uri.startswith("postgres://"):
@@ -48,8 +54,7 @@ def getAndMapData():
         db.session.add(latest_eur_rate)
         db.session.add(latest_gbp_rate)
         db.session.add(latest_usd_rate)
-
-    db.session.commit()
+        db.session.commit()
 
 Timer(30.0, getAndMapData).start()
 
