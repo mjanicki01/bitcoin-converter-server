@@ -4,16 +4,23 @@ from model import db, connect_db, EURData, GBPData, USDData
 import requests
 from datetime import datetime
 from threading import Timer
+import os
 
+uri = os.environ.get('DATABASE_URL')
+if uri.startswith("postgres://"):
+    uri = uri.replace("postgres://", "postgresql://", 1)
 
-API_BASE_URL = "https://api.coindesk.com/v1/bpi/currentprice.json"
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///bc_converter'
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(uri, 'postgresql:///bc_converter')
+app.config["SECRET_KEY"] = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 
 connect_db(app)
 db.create_all()
+
+API_BASE_URL = "https://api.coindesk.com/v1/bpi/currentprice.json"
 
 
 """Every 30 seconds, call API to get latest conversion data & add to DB"""
