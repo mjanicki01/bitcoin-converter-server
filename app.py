@@ -8,6 +8,7 @@ from os import environ, path
 import os
 from dotenv import load_dotenv
 
+app = Flask(__name__)
 
 basedir = path.abspath(path.dirname(__file__))
 load_dotenv(path.join(basedir, '.env'))
@@ -16,8 +17,6 @@ uri = os.environ.get('DATABASE_URL')
 if uri.startswith("postgres://"):
     uri = uri.replace("postgres://", "postgresql://", 1)
 
-
-app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(uri, 'postgresql:///bc_converter')
 app.config["SECRET_KEY"] = os.environ.get('SECRET_KEY')
 SECRET_KEY = os.environ.get('SECRET_KEY')
