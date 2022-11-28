@@ -7,95 +7,113 @@ def connect_db(app):
     db.init_app(app)
 
 
-
 class EURData(db.Model):
     __tablename__ = "eur"
 
+    id = db.Column(db.Integer,
+        primary_key=True,
+        autoincrement=True)
+
     currency = db.Column(
         db.String,
-        primary_key = True,
         default="eur",
         unique= False,
-        nullable = False
-    )
+        nullable = False)
+
+    apiTimestamp = db.Column(
+        db.String,
+        unique = False,
+        nullable = False)
 
     xValueRate = db.Column(
         db.Integer,
         unique = False,
-        nullable = False
-    )
+        nullable = False)
 
-    yValueDate = db.Column(
+    yValueTime = db.Column(
         db.String,
         unique = True,
-        nullable = False
-    )
+        nullable = False)
 
     def serialize(self):
         return {
             'currency': self.currency,
-            'xValue-Rate': self.xValueRate,
-            'yValue-Date': self.yValueDate
+            'apiTimestamp': self.apiTimestamp,
+            'xValueRate': self.xValueRate,
+            'yValueTime': self.yValueTime
         }
+
 
 
 class USDData(db.Model):
     __tablename__ = "usd"
 
+    id = db.Column(db.Integer,
+        primary_key=True,
+        autoincrement=True)
+
     currency = db.Column(
         db.String,
-        primary_key = True,
         default="usd",
         unique= False,
-        nullable = False
-    )
+        nullable = False)
+
+    apiTimestamp = db.Column(
+        db.String,
+        unique = False,
+        nullable = False)
 
     xValueRate = db.Column(
         db.Integer,
         unique = False,
-        nullable = False
-    )
+        nullable = False)
 
-    yValueDate = db.Column(
+    yValueTime = db.Column(
         db.String,
         unique = True,
-        nullable = False
-    )
+        nullable = False)
 
     def serialize(self):
         return {
             'currency': self.currency,
-            'xValue-Rate': self.xValueRate,
-            'yValue-Date': self.yValueDate
+            'apiTimestamp': self.apiTimestamp,
+            'xValueRate': self.xValueRate,
+            'yValueTime': self.yValueTime
         }
 
 
 class GBPData(db.Model):
     __tablename__ = "gbp"
 
+    id = db.Column(db.Integer,
+        primary_key=True,
+        autoincrement=True)
+
     currency = db.Column(
         db.String,
-        primary_key = True,
         default="gpb",
         unique= False,
-        nullable = False
-    )
+        nullable = False)
+
+    apiTimestamp = db.Column(
+        db.String,
+        unique = False,
+        nullable = False)
 
     xValueRate = db.Column(
         db.Integer,
         unique = False,
-        nullable = False
-    )
+        nullable = False)
 
-    yValueDate = db.Column(
+    yValueTime = db.Column(
         db.String,
         unique = True,
-        nullable = False
-    )
-
+        nullable = False)
+        
     def serialize(self):
         return {
             'currency': self.currency,
-            'xValue-Rate': self.xValueRate,
-            'yValue-Date': self.yValueDate
+            'apiTimestamp': self.apiTimestamp,
+            'xValueRate': self.xValueRate,
+            'yValueTime': self.yValueTime
         }
