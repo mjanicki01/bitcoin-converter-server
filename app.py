@@ -13,7 +13,7 @@ app = Flask(__name__)
 basedir = path.abspath(path.dirname(__file__))
 load_dotenv(path.join(basedir, '.env'))
 
-uri = os.environ.get('DATABASE_URL')
+uri = os.environ.get('DATABASE_URL', 'postgresql:///bc_converter')
 if uri.startswith("postgres://"):
     uri = uri.replace("postgres://", "postgresql://", 1)
 
