@@ -4,22 +4,23 @@ from model import db, connect_db, EURData, GBPData, USDData
 import requests
 from datetime import datetime
 from threading import Timer
-from os import environ, path
 import os
-from dotenv import load_dotenv
+import psycopg2
+
 
 app = Flask(__name__)
-
-basedir = path.abspath(path.dirname(__file__))
-load_dotenv(path.join(basedir, '.env'))
 
 uri = os.environ.get('DATABASE_URL', 'postgresql:///bc_converter')
 if uri.startswith("postgres://"):
     uri = uri.replace("postgres://", "postgresql://", 1)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get(uri, 'postgresql:///bc_converter')
+app.config["SQLALCHEMY_DATABASE_URI"] = uri
+
+DATABASE_URL = os.environ['DATABASE_URL']
+
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+
 app.config["SECRET_KEY"] = os.environ.get('SECRET_KEY')
-SECRET_KEY = os.environ.get('SECRET_KEY')
 
 
 connect_db(app)
