@@ -18,7 +18,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 
 connect_db(app)
-db.create_all()
+with app.app_context():
+    db.create_all()
 
 API_BASE_URL = "https://api.coindesk.com/v1/bpi/currentprice.json"
 
@@ -43,9 +44,10 @@ def getAndMapData():
         apiTimestamp = resp.json()["time"]["updated"],
         yValueTime = date)
 
-    db.session.add(latest_eur_rate)
-    db.session.add(latest_gbp_rate)
-    db.session.add(latest_usd_rate)
+    with app.app_context():
+        db.session.add(latest_eur_rate)
+        db.session.add(latest_gbp_rate)
+        db.session.add(latest_usd_rate)
 
     db.session.commit()
 
